@@ -21,6 +21,6 @@ export const emailSignIn = actionClient
       redirect("/error");
     }
 
-    revalidatePath("/secret-page-1", "layout");
-    redirect("/secret-page-1");
+    revalidatePath("/", "layout");
+    redirect("/");
   });

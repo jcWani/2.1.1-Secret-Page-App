@@ -1,9 +1,19 @@
-import { LoginForm } from "@/components/auth/login-form";
+import AppLayout from "@/components/ui/app-layout";
+import { createClient } from "@/server/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <LoginForm />
-    </div>
+    <AppLayout>
+      <div>
+        <h1 className="text-2xl font-bold mb-4">Welcome to the Home Page</h1>
+        <p>Hello, {user?.user_metadata.username}!</p>
+      </div>
+    </AppLayout>
   );
 }
