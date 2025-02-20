@@ -20,14 +20,6 @@ export const emailSignUp = actionClient
 
     if (error) return { error: "Sign-up failed" };
 
-    if (data.user) {
-      await supabase
-        .from("secret_messages")
-        .insert([
-          { user_id: data.user.id, message: "Your default secret message!" },
-        ]);
-    }
-
     revalidatePath("/", "layout");
 
     return {

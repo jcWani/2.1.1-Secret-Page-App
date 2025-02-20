@@ -3,25 +3,21 @@
 import { createClient } from "../supabase/server";
 
 export async function getUserSecretMessage() {
-  try {
-    const supabase = await createClient();
+  const supabase = await createClient();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if (!user) return { error: "Not authenticated" };
+  if (!user) return { error: "Not authenticated" };
 
-    const { data: secretMessage, error } = await supabase
-      .from("secret_messages")
-      .select("message")
-      .eq("user_id", user.id)
-      .single();
+  const { data: secretMessage, error } = await supabase
+    .from("secret_messages")
+    .select("message")
+    .eq("user_id", user.id)
+    .single();
 
-    if (error) return { error: "No secret message found" };
+  if (error) return { error: "No secret message found" };
 
-    return { secretMessage: secretMessage.message };
-  } catch (error) {
-    return { error: "No secret message found" };
-  }
+  return { secretMessage: secretMessage.message };
 }

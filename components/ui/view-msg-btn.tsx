@@ -1,4 +1,4 @@
-import { Eye } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "./button";
 
 import {
@@ -9,6 +9,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { getUserSecretMessage } from "@/server/actions/get-user-secret-message";
 
 export default async function ViewMessageBtn() {
@@ -17,23 +25,28 @@ export default async function ViewMessageBtn() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          View
-          <Eye />
+        <Button variant="outline" disabled={error ? true : false}>
+          {error ? (
+            <>
+              No secret message
+              <EyeOff />
+            </>
+          ) : (
+            <>
+              View
+              <Eye />
+            </>
+          )}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>🔒 Your Secret Message</DialogTitle>
-          <DialogDescription>Friends can also see this</DialogDescription>
+          <DialogDescription>Friends can also see thi</DialogDescription>
         </DialogHeader>
-        {error ? (
-          <p className="text-red-500">{error}</p>
-        ) : (
-          <p className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-lg">
-            {secretMessage}
-          </p>
-        )}
+        <p className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-lg">
+          {secretMessage}
+        </p>
       </DialogContent>
     </Dialog>
   );
