@@ -3,7 +3,6 @@
 import * as z from "zod";
 
 import { useState } from "react";
-import { redirect } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -139,7 +138,7 @@ export default function SignUpForm() {
                 status === "executing" ? "animate-pulse" : ""
               )}
             >
-              Sign Up
+              {status === "executing" ? "Singning up" : "Sign up"}
             </Button>
           </form>
         </Form>

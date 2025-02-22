@@ -23,8 +23,10 @@ import { FormError } from "./form-error";
 import { AuthCard } from "./auth-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -37,6 +39,7 @@ export const LoginForm = () => {
 
   const { execute, status } = useAction(emailSignIn, {
     onSuccess(data) {
+      if (data.data?.success) router.push("/");
       if (data.data?.error) setError(data.data?.error);
     },
   });
@@ -107,7 +110,7 @@ export const LoginForm = () => {
                 status === "executing" ? "animate-pulse" : ""
               )}
             >
-              Sign in
+              {status === "executing" ? "Signing in..." : "Sign in"}
             </Button>
           </form>
         </Form>

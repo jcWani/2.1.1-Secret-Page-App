@@ -8,21 +8,26 @@ import { revalidatePath } from "next/cache";
 export const emailSignUp = actionClient
   .schema(RegisterSchema)
   .action(async ({ parsedInput: { email, password, username } }) => {
-    const supabase = await createClient();
+    try {
+      const supabase = await createClient();
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { username },
-      },
-    });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { username },
+        },
+      });
 
-    if (error) return { error: "Sign-up failed" };
+      if (error) return { error: "Sign-up failed" };
 
-    revalidatePath("/", "layout");
+      revalidatePath("/", "layout");
 
-    return {
-      success: "Account successfully created! Confirmation email sent.",
-    };
+      return {
+        success: "Account successfully created! Confirmation email sent.",
+      };
+    } catch (err) {
+      console.error("Sign-up error:", err);
+      return { error: "An unexpected error occurred. Please try again later." };
+    }
   });

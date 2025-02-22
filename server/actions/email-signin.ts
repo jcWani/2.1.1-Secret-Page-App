@@ -9,18 +9,19 @@ import { revalidatePath } from "next/cache";
 export const emailSignIn = actionClient
   .schema(LoginSchema)
   .action(async ({ parsedInput: { email, password } }) => {
-    const supabase = await createClient();
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const supabase = await createClient();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) return { error: "Incorrect credentials" };
+      if (error) return { error: "Incorrect credentials" };
 
-    if (error) {
+      revalidatePath("/", "layout");
+      return { success: true };
+    } catch (err) {
+      console.error("Login error:", err);
       redirect("/error");
     }
-
-    revalidatePath("/", "layout");
-    redirect("/");
   });

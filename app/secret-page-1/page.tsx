@@ -3,7 +3,7 @@ import AppLayout from "@/components/ui/app-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import ViewMessageBtn from "@/components/ui/view-msg-btn";
 
-export default async function SecretPage1() {
+export default function SecretPage1() {
   return (
     <AppLayout>
       <div>

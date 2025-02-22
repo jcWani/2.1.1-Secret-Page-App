@@ -3,14 +3,25 @@
 import { createClient } from "../supabase/server";
 
 export async function deleteAccount() {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-  if (!user) throw new Error("User is not login");
+    if (userError || !user) throw new Error("User is not logged in");
 
-  const { data, error } = await supabase.auth.admin.deleteUser(user.id);
-  if (error) throw new Error(error.message);
+    const { error: deleteError } = await supabase.auth.admin.deleteUser(
+      user.id
+    );
+
+    if (deleteError) throw new Error(deleteError.message);
+
+    return { success: "Account successfully deleted" };
+  } catch (err) {
+    console.error("Account deletion error:", err);
+    return { error: "Failed to delete account. Please try again later." };
+  }
 }
