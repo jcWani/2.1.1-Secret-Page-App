@@ -1,6 +1,4 @@
-import { getUserSecretMessage } from "@/server/actions/get-user-secret-message";
-import { getUser } from "@/server/actions/get-user";
-import { redirect } from "next/navigation";
+"use client";
 
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "./button";
@@ -14,28 +12,30 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default async function ViewMessageBtn() {
-  const user = await getUser();
-  if (!user) redirect("/login");
+type SecretMessage = {
+  message: string;
+};
 
-  const secretMessage = await getUserSecretMessage(user.id);
+type Props = {
+  secretMessage: SecretMessage;
+};
+
+export default function ViewMessageBtn({ secretMessage }: Props) {
+  const noSecretMessage = secretMessage.message === "No secret message found.";
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          disabled={secretMessage?.message ? false : true}
-        >
-          {secretMessage?.message ? (
-            <>
-              View
-              <Eye />
-            </>
-          ) : (
+        <Button variant="outline" disabled={noSecretMessage ? true : false}>
+          {noSecretMessage ? (
             <>
               No secret message
               <EyeOff />
+            </>
+          ) : (
+            <>
+              View
+              <Eye />
             </>
           )}
         </Button>
@@ -47,7 +47,7 @@ export default async function ViewMessageBtn() {
         </DialogHeader>
         <div className="mt-4 max-h-[60vh] overflow-y-auto">
           <p className="p-4 bg-gray-100 border border-gray-300 rounded-lg whitespace-pre-wrap break-words">
-            {secretMessage?.message || "No message found"}
+            {secretMessage.message}
           </p>
         </div>
       </DialogContent>

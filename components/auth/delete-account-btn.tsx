@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { deleteAccount } from "@/server/actions/delete-account";
+
 import { Trash } from "lucide-react";
 import { Button, buttonVariants } from "../ui/button";
 

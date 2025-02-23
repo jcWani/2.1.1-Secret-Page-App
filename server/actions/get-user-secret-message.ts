@@ -11,11 +11,13 @@ export async function getUserSecretMessage(userId: string) {
       .eq("user_id", userId)
       .maybeSingle();
 
-    if (error) return null;
+    if (error || !secret_messages) {
+      return { message: "No secret message found." };
+    }
 
     return secret_messages;
   } catch (err) {
     console.error("Unexpected error:", err);
-    return null;
+    return { message: "An error occurred while fetching the message." };
   }
 }

@@ -1,9 +1,23 @@
+"use server";
+
 import DeleteAccountBtn from "@/components/auth/delete-account-btn";
 import AppLayout from "@/components/ui/app-layout";
-import { Card, CardContent } from "@/components/ui/card";
 import ViewMessageBtn from "@/components/ui/view-msg-btn";
 
-export default function SecretPage1() {
+import { redirect } from "next/navigation";
+import { getUserSecretMessage } from "@/server/actions/get-user-secret-message";
+import { getCurrentUser } from "@/server/actions/get-current-user";
+
+import { Card, CardContent } from "@/components/ui/card";
+
+export default async function SecretPage1() {
+  // Get Logged in user
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  // Get Secret Message
+  const secretMessage = await getUserSecretMessage(user.id);
+
   return (
     <AppLayout>
       <div>
@@ -19,7 +33,7 @@ export default function SecretPage1() {
                 Access your own secret message
               </p>
             </div>
-            <ViewMessageBtn />
+            <ViewMessageBtn secretMessage={secretMessage} />
           </div>
 
           <div className="flex items-center justify-between gap-4">

@@ -1,12 +1,8 @@
 import AppLayout from "@/components/ui/app-layout";
-import { createClient } from "@/server/supabase/server";
+import { getCurrentUser } from "@/server/actions/get-current-user";
 
 export default async function Home() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   return (
     <AppLayout>

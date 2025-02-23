@@ -2,7 +2,6 @@
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./app-sidebar";
-import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { Spinner } from "./spinner";
 
@@ -10,10 +9,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const timer = setTimeout(() => setLoading(false), 500); // Simulate loading time
     return () => clearTimeout(timer);
-  }, [children]);
+  }, []);
 
   return (
     <SidebarProvider>
@@ -34,7 +32,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </main>
-      <Toaster position="top-center" richColors />
     </SidebarProvider>
   );
 }
