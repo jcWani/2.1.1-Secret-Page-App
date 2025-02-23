@@ -4,6 +4,7 @@ import { actionClient } from "@/lib/safe-action";
 import { createClient } from "../supabase/server";
 
 import { MessageSchema } from "@/types/message-schema";
+import { revalidatePath } from "next/cache";
 
 export const upsertMessage = actionClient
   .schema(MessageSchema)
@@ -36,6 +37,7 @@ export const upsertMessage = actionClient
 
         if (insertError) return { error: "Failed to add message" };
 
+        revalidatePath("/protected/secret-page-1");
         return { success: "Message created successfully" };
       }
     } catch (error) {
