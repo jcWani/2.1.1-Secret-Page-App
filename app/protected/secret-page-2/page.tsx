@@ -1,6 +1,5 @@
 "use server";
 
-import AppLayout from "@/components/ui/app-layout";
 import MsgForm from "@/components/ui/msg-form";
 import { getCurrentUser } from "@/server/actions/get-current-user";
 import { getUserSecretMessage } from "@/server/actions/get-user-secret-message";
@@ -16,12 +15,10 @@ export default async function SecretPage2() {
   const noSecretMessage = secretMessage.message === "No secret message found.";
 
   return (
-    <AppLayout>
-      <MsgForm
-        mode={noSecretMessage ? "create" : "edit"}
-        userId={user.id}
-        initialMessage={noSecretMessage ? "" : secretMessage.message}
-      />
-    </AppLayout>
+    <MsgForm
+      mode={noSecretMessage ? "create" : "edit"}
+      userId={user.id}
+      initialMessage={noSecretMessage ? "" : secretMessage.message}
+    />
   );
 }

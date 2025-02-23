@@ -4,7 +4,6 @@ import AddFriendForm from "@/components/friends/add-friend-form";
 import FriendRequests from "@/components/friends/friend-request";
 import FriendsList from "@/components/friends/friends-list";
 import UserIdDisplay from "@/components/friends/user-id-display";
-import AppLayout from "@/components/ui/app-layout";
 import getUser from "@/server/actions/get-user";
 
 import { Suspense } from "react";
@@ -44,10 +43,12 @@ export default async function SecretPage3() {
   ).filter((user): user is User => user !== null);
 
   return (
-    <AppLayout>
+    <>
       <div className="container mx-auto p-4 space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold mb-6">Secret Page 3</h1>
+          <h1 className="text-2xl font-bold mb-6">
+            Welcome to Secret Page 3, {user.user_metadata.username}
+          </h1>
           <UserIdDisplay id={user.id} />
         </div>
         <div className="grid md:grid-cols-2 gap-6">
@@ -58,6 +59,6 @@ export default async function SecretPage3() {
           <FriendsList friends={friends} user={user} />
         </Suspense>
       </div>
-    </AppLayout>
+    </>
   );
 }

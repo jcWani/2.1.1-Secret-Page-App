@@ -1,7 +1,6 @@
 "use server";
 
 import DeleteAccountBtn from "@/components/auth/delete-account-btn";
-import AppLayout from "@/components/ui/app-layout";
 import ViewMessageBtn from "@/components/ui/view-msg-btn";
 
 import { redirect } from "next/navigation";
@@ -19,7 +18,7 @@ export default async function SecretPage1() {
   const secretMessage = await getUserSecretMessage(user.id);
 
   return (
-    <AppLayout>
+    <>
       <div>
         <h1 className="text-2xl font-bold mb-4">Welcome to Secret Page One</h1>
       </div>
@@ -47,6 +46,6 @@ export default async function SecretPage1() {
           </div>
         </CardContent>
       </Card>
-    </AppLayout>
+    </>
   );
 }

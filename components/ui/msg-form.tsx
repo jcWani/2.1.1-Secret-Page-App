@@ -55,7 +55,7 @@ export default function MsgForm({
         setTimeout(() => toast.success(data?.data?.success), 0);
         setIsSubmitted(true);
 
-        router.push("/secret-page-1");
+        router.push("/protected/secret-page-1");
       }
     },
   });

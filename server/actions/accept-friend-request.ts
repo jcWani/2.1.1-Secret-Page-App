@@ -14,7 +14,7 @@ export async function acceptFriendRequest(userId: string, friendId: string) {
 
     if (error) throw new Error("Error accepting friend request:", error);
 
-    revalidatePath("/secret-page-3");
+    revalidatePath("/protected/secret-page-3");
     return { success: "Friend request accepted" };
   } catch (err) {
     console.error("Error accepting friend request:", err);

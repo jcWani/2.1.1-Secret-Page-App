@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, FileLock2, FolderLock, MessageSquareLock } from "lucide-react";
+import { FileLock2, FolderLock, MessageSquareLock } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,10 +18,17 @@ import {
 import LogoutButton from "../auth/logout-button";
 
 const menuItems = [
-  { title: "Home", icon: Home, href: "/" },
-  { title: "Secret Page 1", icon: FileLock2, href: "/secret-page-1" },
-  { title: "Secret Page 2", icon: FolderLock, href: "/secret-page-2" },
-  { title: "Secret Page 3", icon: MessageSquareLock, href: "/secret-page-3" },
+  { title: "Secret Page 1", icon: FileLock2, href: "/protected/secret-page-1" },
+  {
+    title: "Secret Page 2",
+    icon: FolderLock,
+    href: "/protected/secret-page-2",
+  },
+  {
+    title: "Secret Page 3",
+    icon: MessageSquareLock,
+    href: "/protected/secret-page-3",
+  },
 ];
 
 export function AppSidebar() {
